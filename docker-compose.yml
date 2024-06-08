@@ -8,6 +8,9 @@ services:
     environment:
       - HOST=0.0.0.0
       - PORT=8080
+      - DB_HOST=neo4j
+      - DB_PORT=7687
+      - DB_PSW=${DB_PSW}
   neo4j:
     container_name: neo4j
     image: neo4j:latest
@@ -15,7 +18,7 @@ services:
       - 7474:7474
       - 7687:7687
     environment:
-      - NEO4J_AUTH=neo4j/${NEO4J_PASSWORD}
+      - NEO4J_AUTH=neo4j/${DB_PSW}
       # - NEO4J_server_memory_heap_initial__size=6G
       - NEO4J_server_memory_heap_max__size=6G
       # - NEO4J_apoc_export_file_enabled=true

@@ -9,7 +9,7 @@ tidy:
 	go mod tidy
 
 build:
-	go build -o out/main main.go
+	go build -o out/main cmd/go-so-trends/main.go
 
 run: 
 	./out/main

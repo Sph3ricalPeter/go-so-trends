@@ -26,3 +26,6 @@ out/
 
 # DB
 neo4j_db/
+
+# .env
+.env

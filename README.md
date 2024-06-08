@@ -24,3 +24,5 @@ Requires `Docker version 26.1.1, build 4cf5afa` or later
 https://medium.com/@matthewghannoum/simple-graph-database-setup-with-neo4j-and-docker-compose-061253593b5a
 
 https://github.com/neo4j/neo4j-go-driver
+
+https://neo4j.com/docs/go-manual/current/

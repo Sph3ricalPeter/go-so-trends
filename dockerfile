@@ -1,12 +1,12 @@
 FROM golang:latest AS build
 WORKDIR /app
-COPY go.mod main.go ./
-RUN go mod tidy
-RUN go build -o main main.go
+COPY . ./
+RUN make tidy
+RUN make build
 
 FROM busybox:glibc as run
 WORKDIR /app
-COPY --from=build /app/main .
+COPY --from=build /app/out/main .
 
 EXPOSE 8080
 ENTRYPOINT ["/app/main"]
