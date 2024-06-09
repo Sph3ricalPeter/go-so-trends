@@ -10,7 +10,6 @@ import (
 
 	"github.com/Sph3ricalPeter/go-so-trends/internal/config"
 	n4j "github.com/Sph3ricalPeter/go-so-trends/internal/db/neo4j"
-	"github.com/joho/godotenv"
 )
 
 const (
@@ -19,8 +18,6 @@ const (
 )
 
 func main() {
-	godotenv.Load()
-
 	// connect to DB
 	db := &n4j.Neo4j{
 		Host:     config.DB_HOST,
@@ -78,7 +75,12 @@ func createLinks(ctx context.Context, repo n4j.SoNodeRepository, records [][]str
 			panic(err)
 		}
 
-		err = repo.CreateLink(ctx, source.Name, target.Name)
+		value, err := strconv.ParseFloat(record[2], 64)
+		if err != nil {
+			panic(err)
+		}
+
+		err = repo.CreateLink(ctx, source.Name, target.Name, value)
 		if err != nil {
 			panic(err)
 		}
