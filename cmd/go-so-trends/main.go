@@ -19,11 +19,11 @@ func main() {
 		Port:     config.DB_PORT,
 		Password: config.DB_PASS,
 	}
-	driver, err := db.Connect()
+	ctx := context.Background()
+	driver, err := db.Connect(ctx)
 	if err != nil {
 		log.Fatalf("Failed to connect to Neo4j: %v", err)
 	}
-	ctx := context.Background()
 	defer driver.Close(ctx)
 
 	// create repository & api

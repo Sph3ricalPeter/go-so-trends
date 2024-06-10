@@ -24,22 +24,17 @@ func main() {
 		Port:     config.DB_PORT,
 		Password: config.DB_PASS,
 	}
-	driver, err := db.Connect()
+	ctx := context.Background()
+	driver, err := db.Connect(ctx)
 	if err != nil {
 		log.Fatalf("Failed to connect to Neo4j: %v", err)
 	}
-	ctx := context.Background()
 	defer driver.Close(ctx)
 
 	repo := n4j.SoNodeRepository{Driver: driver}
 
-	// cleanup existing data if prompt is confirmed
-	fmt.Print("Do you want to delete all existing data? (y/n): ")
-	var response string
-	fmt.Scanln(&response)
-	if response == "y" {
-		repo.DeleteAll(ctx)
-	}
+	// cleanup existing data
+	repo.DeleteAll(ctx)
 
 	// load and insert nodes
 	nodeRecords := loadCSVRecords(NODES_FNAME)

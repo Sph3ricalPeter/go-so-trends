@@ -11,8 +11,14 @@ tidy:
 build:
 	go build -o out/main cmd/go-so-trends/main.go
 
+build-init:
+	go build -o out/init scripts/init.go
+
 run: 
 	./out/main
+
+run-init:
+	./out/init
 
 clean:
 	rm -rf out

@@ -2,6 +2,8 @@ version: '3'
 services:
   go-so-trends:
     container_name: go-so-trends-app
+    depends_on:
+      - neo4j
     build: .
     ports:
       - 8080:8080

@@ -1,6 +1,7 @@
 package neo4j
 
 import (
+	"context"
 	"fmt"
 	"log"
 
@@ -13,12 +14,17 @@ type Neo4j struct {
 	Password string
 }
 
-func (c *Neo4j) Connect() (neo4j.DriverWithContext, error) {
-	dbUri := fmt.Sprintf("neo4j://%s:%s", c.Host, c.Port)
-	log.Printf("Connecting to Neo4j at %s\n", dbUri)
+func (c *Neo4j) Connect(ctx context.Context) (neo4j.DriverWithContext, error) {
+	dbUri := fmt.Sprintf("bolt://%s:%s", c.Host, c.Port)
 	driver, err := neo4j.NewDriverWithContext(dbUri, neo4j.BasicAuth("neo4j", c.Password, ""))
 	if err != nil {
 		return nil, err
 	}
+	log.Printf("Connecting to Neo4j at %s\n", dbUri)
+	err = driver.VerifyConnectivity(ctx)
+	if err != nil {
+		return nil, err
+	}
+	log.Println("Connected to Neo4j")
 	return driver, nil
 }
